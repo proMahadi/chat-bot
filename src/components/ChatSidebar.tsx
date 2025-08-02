@@ -43,7 +43,7 @@ export function ChatSidebar({
 
   if (!hasApiKey && showApiKeyInput) {
     return (
-      <div className="w-80 border-r bg-card p-4">
+      <div className="w-80 border-l bg-card p-4">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Settings size={20} />
@@ -82,7 +82,7 @@ export function ChatSidebar({
   }
 
   return (
-    <div className="w-80 border-r bg-card flex flex-col">
+    <div className="w-80 border-l bg-card flex flex-col">
       <div className="p-4 border-b">
         <Button onClick={onNewChat} className="w-full">
           <Plus size={16} className="mr-2" />

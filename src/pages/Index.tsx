@@ -148,16 +148,6 @@ const Index = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      <ChatSidebar
-        chats={chats}
-        currentChatId={currentChatId}
-        onChatSelect={setCurrentChatId}
-        onNewChat={createNewChat}
-        onDeleteChat={deleteChat}
-        onApiKeySubmit={setApiKey}
-        hasApiKey={!!apiKey}
-      />
-      
       <div className="flex-1 flex flex-col">
         {currentChat ? (
           <ScrollArea className="flex-1 p-4">
@@ -210,6 +200,16 @@ const Index = () => {
           </div>
         )}
       </div>
+      
+      <ChatSidebar
+        chats={chats}
+        currentChatId={currentChatId}
+        onChatSelect={setCurrentChatId}
+        onNewChat={createNewChat}
+        onDeleteChat={deleteChat}
+        onApiKeySubmit={setApiKey}
+        hasApiKey={!!apiKey}
+      />
     </div>
   );
 };
