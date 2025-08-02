@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Plus, MessageSquare, Trash2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Plus, MessageSquare, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Chat {
   id: string;
@@ -17,22 +17,22 @@ interface ChatSidebarProps {
   onDeleteChat: (chatId: string) => void;
 }
 
-export function ChatSidebar({ 
-  chats, 
-  currentChatId, 
-  onChatSelect, 
-  onNewChat, 
-  onDeleteChat
+function ChatSidebar({
+  chats,
+  currentChatId,
+  onChatSelect,
+  onNewChat,
+  onDeleteChat,
 }: ChatSidebarProps) {
   return (
-    <div className="w-80 border-l bg-card flex flex-col">
+    <div className="w-80 border-r bg-card flex flex-col">
       <div className="p-4 border-b">
         <Button onClick={onNewChat} className="w-full">
           <Plus size={16} className="mr-2" />
           New Chat
         </Button>
       </div>
-      
+
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-2">
           {chats.map((chat) => (
@@ -40,8 +40,8 @@ export function ChatSidebar({
               key={chat.id}
               className={cn(
                 "group flex items-center gap-2 p-3 rounded-lg cursor-pointer transition-colors",
-                currentChatId === chat.id 
-                  ? "bg-primary/10 text-primary" 
+                currentChatId === chat.id
+                  ? "bg-primary/10 text-primary"
                   : "hover:bg-muted"
               )}
               onClick={() => onChatSelect(chat.id)}
@@ -71,3 +71,5 @@ export function ChatSidebar({
     </div>
   );
 }
+
+export default ChatSidebar;
