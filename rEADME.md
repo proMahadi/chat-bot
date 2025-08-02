@@ -1,73 +1,96 @@
-# Welcome to your Lovable project
+# 🚀 chat-bot
 
-## Project info
+## 📖 Overview
 
-**URL**: https://lovable.dev/projects/6748f232-99c4-4e62-b801-574d77f79c2f
+This project is a basic chat bot application built using Vite, React, and TypeScript. It provides a foundation for building more complex chat bot interfaces. The current implementation is a single-page application with a simple text input and display area. The project is designed to be easily customizable and extended with additional features. The target audience includes frontend developers who are familiar with React and TypeScript and want to quickly build a chatbot interface.
 
-## How can I edit this code?
+## ✨ Features
 
-There are several ways of editing your application.
+- Simple and intuitive user interface.
+- Built with React, TypeScript and Vite for a fast development experience.
+- Clean and organized codebase.
+- Easily customizable styling via Tailwind CSS.
+- Uses components for easy extension and modification.
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6748f232-99c4-4e62-b801-574d77f79c2f) and start prompting.
+**Frontend:**
 
-Changes made via Lovable will be committed automatically to this repo.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 
-**Use your preferred IDE**
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+[![Vite](https://img.shields.io/badge/vite-B4B4B4?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-Follow these steps:
+## 🚀 Quick Start
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Node.js (version 16 or higher)
+- Bun (Optional, but recommended for faster build times. Instructions are below)
+- npm (or yarn/pnpm)
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation using Bun (Recommended)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. **Install Bun:** Follow instructions at [https://bun.sh/](https://bun.sh/)
+2. **Clone the repository:**
+   ```bash
+   git clone https://github.com/proMahadi/chat-bot.git
+   cd chat-bot
+   ```
+3. **Install dependencies:**
+   ```bash
+   bun install
+   ```
+4. **Start development server:**
+   ```bash
+   bun dev
+   ```
+
+### Installation using npm (or yarn/pnpm)
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/proMahadi/chat-bot.git
+   cd chat-bot
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
+## 📁 Project Structure
+
+```
+chat-bot/
+├── public/            # Static assets
+├── src/
+│   └── App.tsx        # Main application component
+└── ...                # Other source code files
 ```
 
-**Edit a file directly in GitHub**
+## ⚙️ Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The project uses `vite.config.ts` for build configuration and `tailwind.config.ts` for Tailwind CSS customization. No environment variables are currently used.
 
-**Use GitHub Codespaces**
+## 🔧 Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Available Scripts
 
-## What technologies are used for this project?
+| Command | Description |
 
-This project is built with:
+|-------------|-----------------------------------|
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| `bun dev` | Starts the development server |
 
-## How can I deploy this project?
+| `bun build` | Creates a production build |
 
-Simply open [Lovable](https://lovable.dev/projects/6748f232-99c4-4e62-b801-574d77f79c2f) and click on Share -> Publish.
+| `npm run dev` | Starts the development server using npm|
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+| `npm run build` | Creates a production build using npm |
