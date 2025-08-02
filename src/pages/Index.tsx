@@ -29,11 +29,11 @@ const Index = () => {
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useLocalStorage<string>('groq-api-key', '');
+  const [apiKey] = useState('your-groq-api-key-here'); // Replace with your actual API key
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentChat = chats.find(chat => chat.id === currentChatId);
-  const groqClient = apiKey ? new GroqClient(apiKey) : null;
+  const groqClient = new GroqClient(apiKey);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -66,7 +66,7 @@ const Index = () => {
   };
 
   const sendMessage = async (content: string) => {
-    if (!content.trim() || !groqClient || isLoading) return;
+    if (!content.trim() || isLoading) return;
 
     let targetChatId = currentChatId;
 
@@ -91,25 +91,27 @@ const Index = () => {
     };
 
     // Add user message
-    setChats(prev => prev.map(chat => 
-      chat.id === targetChatId 
-        ? { 
-            ...chat, 
-            messages: [...chat.messages, userMessage],
-            title: chat.messages.length === 0 ? generateChatTitle(content) : chat.title
-          }
-        : chat
-    ));
+    let updatedChatData: Chat;
+    setChats(prev => prev.map(chat => {
+      if (chat.id === targetChatId) {
+        updatedChatData = { 
+          ...chat, 
+          messages: [...chat.messages, userMessage],
+          title: chat.messages.length === 0 ? generateChatTitle(content) : chat.title
+        };
+        return updatedChatData;
+      }
+      return chat;
+    }));
 
     setMessage('');
     setIsLoading(true);
 
     try {
-      const chatHistory = currentChat?.messages || [];
+      const chatHistory = updatedChatData!.messages || [];
       const messages = [
         { role: 'system' as const, content: 'You are a helpful AI assistant. When providing code examples, always wrap them in triple backticks (```) for proper formatting.' },
-        ...chatHistory.map(msg => ({ role: msg.role, content: msg.content })),
-        { role: 'user' as const, content }
+        ...chatHistory.map(msg => ({ role: msg.role, content: msg.content }))
       ];
 
       const response = await groqClient.chat(messages);
@@ -176,29 +178,27 @@ const Index = () => {
                 </p>
               </div>
               
-              {apiKey && <ChatSuggestions onSuggestionClick={handleSuggestionClick} />}
+              <ChatSuggestions onSuggestionClick={handleSuggestionClick} />
             </div>
           </div>
         )}
         
-        {apiKey && (
-          <div className="border-t p-4">
-            <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Type your message..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="flex-1 bg-chat-input"
-                  disabled={isLoading}
-                />
-                <Button type="submit" disabled={isLoading || !message.trim()}>
-                  {isLoading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
-                </Button>
-              </div>
-            </form>
-          </div>
-        )}
+        <div className="border-t p-4">
+          <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+            <div className="flex gap-2">
+              <Input
+                placeholder="Type your message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="flex-1 bg-chat-input"
+                disabled={isLoading}
+              />
+              <Button type="submit" disabled={isLoading || !message.trim()}>
+                {isLoading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
       
       <ChatSidebar
@@ -207,8 +207,6 @@ const Index = () => {
         onChatSelect={setCurrentChatId}
         onNewChat={createNewChat}
         onDeleteChat={deleteChat}
-        onApiKeySubmit={setApiKey}
-        hasApiKey={!!apiKey}
       />
     </div>
   );
