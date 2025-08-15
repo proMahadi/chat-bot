@@ -32,7 +32,7 @@ const Index = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
-  const [apiKey] = useState('your-groq-api-key-here');
+  const [apiKey] = useState("your-groq-api-key-here");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
@@ -203,7 +203,7 @@ const Index = () => {
 
       {/* Mobile Sheet - visible on screens below lg */}
       <Sheet open={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
-        <SheetContent side="right" className="w-80 p-0">
+        <SheetContent side="right" className="w-80 p-0 pt-10">
           <ChatSidebar
             chats={chats}
             currentChatId={currentChatId}
