@@ -32,7 +32,7 @@ const Index = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
-  const [apiKey] = useState("your-groq-api-key-here");
+  const [apiKey] = useState(import.meta.env.VITE_API_URL);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
