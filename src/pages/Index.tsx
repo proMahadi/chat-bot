@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2 } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Send, Loader2, Menu } from "lucide-react";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatSuggestions } from "@/components/ChatSuggestions";
 
@@ -30,7 +31,8 @@ const Index = () => {
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey] = useState(import.meta.env.VITE_API_URL);
+  const [isMobileSheetOpen, setIsMobileSheetOpen] = useState(false);
+  const [apiKey] = useState('your-groq-api-key-here');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentChat = chats.find((chat) => chat.id === currentChatId);
@@ -188,14 +190,49 @@ const Index = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      <ChatSidebar
-        chats={chats}
-        currentChatId={currentChatId}
-        onChatSelect={setCurrentChatId}
-        onNewChat={createNewChat}
-        onDeleteChat={deleteChat}
-      />
+      {/* Desktop Sidebar - visible on lg screens and above */}
+      <div className="hidden lg:flex">
+        <ChatSidebar
+          chats={chats}
+          currentChatId={currentChatId}
+          onChatSelect={setCurrentChatId}
+          onNewChat={createNewChat}
+          onDeleteChat={deleteChat}
+        />
+      </div>
+
+      {/* Mobile Sheet - visible on screens below lg */}
+      <Sheet open={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
+        <SheetContent side="right" className="w-80 p-0">
+          <ChatSidebar
+            chats={chats}
+            currentChatId={currentChatId}
+            onChatSelect={(chatId) => {
+              setCurrentChatId(chatId);
+              setIsMobileSheetOpen(false); // Close sheet on mobile when chat is selected
+            }}
+            onNewChat={() => {
+              createNewChat();
+              setIsMobileSheetOpen(false); // Close sheet when new chat is created
+            }}
+            onDeleteChat={deleteChat}
+          />
+        </SheetContent>
+      </Sheet>
+
       <div className="flex-1 flex flex-col">
+        {/* Mobile Header with Menu Button */}
+        <div className="lg:hidden flex items-center justify-between p-4 border-b">
+          <h2 className="font-semibold">AI Chat Assistant</h2>
+          <Sheet open={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <Menu size={20} />
+              </Button>
+            </SheetTrigger>
+          </Sheet>
+        </div>
+
         {currentChat ? (
           <ScrollArea className="flex-1 p-4">
             <div className="max-w-4xl mx-auto space-y-4">
@@ -226,10 +263,10 @@ const Index = () => {
           <div className="flex-1 flex items-center justify-center">
             <div className="max-w-2xl mx-auto p-8 text-center space-y-6">
               <div className="space-y-4">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                   AI Chat Assistant
                 </h1>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base md:text-lg text-muted-foreground">
                   Powered by Meta Llama 4 Scout via Groq
                 </p>
               </div>
