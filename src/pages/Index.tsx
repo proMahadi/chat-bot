@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Send, Loader2, Menu } from "lucide-react";
@@ -184,6 +184,15 @@ const Index = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (message.trim()) {
+        sendMessage(message);
+      }
+    }
+  };
+
   const handleSuggestionClick = (suggestion: string) => {
     sendMessage(suggestion);
   };
@@ -279,11 +288,12 @@ const Index = () => {
         <div className="border-t p-4">
           <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
             <div className="flex gap-2">
-              <Input
-                placeholder="Type your message..."
+              <Textarea
+                placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="flex-1 bg-chat-input"
+                onKeyDown={handleKeyDown}
+                className="flex-1 bg-chat-input min-h-[40px] max-h-[120px] resize-none"
                 disabled={isLoading}
               />
               <Button type="submit" disabled={isLoading || !message.trim()}>
