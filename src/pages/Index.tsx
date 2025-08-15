@@ -293,7 +293,7 @@ const Index = () => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="flex-1 bg-chat-input min-h-[40px] max-h-[120px] resize-none"
+                className="flex-1 bg-chat-input min-h-[40px] max-h-[300px] resize-none overflow-y-auto"
                 disabled={isLoading}
               />
               <Button type="submit" disabled={isLoading || !message.trim()}>
